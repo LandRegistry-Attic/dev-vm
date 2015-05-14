@@ -2,6 +2,17 @@
 # vi: set ft=ruby :
 
 
+def sync_folder(env_var, box)
+  path = ENV[env_var]
+  if path
+    box.vm.synced_folder "#{path}", "/home/vagrant/#{env_var}", type: "nfs"
+  else
+    puts "#{env_var} is not set."
+    puts "To share this folder with the dev_vm you should set it e.g.:"
+    puts "  echo 'export #{env_var}=~/Projects/land-registry' >> ~/.zshrc"
+  end
+end
+
 Vagrant.configure(2) do |config|
 
   if not defined? VagrantPlugins::LibrarianPuppet
@@ -9,7 +20,7 @@ Vagrant.configure(2) do |config|
     puts "You can install it with `vagrant plugin install vagrant-librarian-puppet`"
     puts "You may have to run `librarian-puppet` on your host machine if you have not already"
   end
-  
+
   config.vm.box = "landregistry/centos"
   config.vm.box_version = "0.1.0"
   config.vm.provision :puppet do |puppet|
@@ -32,13 +43,14 @@ Vagrant.configure(2) do |config|
     puts "Continuing in slow mode..."
   end
 
-
   config.vm.define "dev" do |dev|
     dev.vm.host_name = "dev"
-    dev.vm.network "private_network", ip: "127.0.0.10"
+    dev.vm.network "private_network", ip: "10.10.10.10"
+
     dev.vm.provider :virtualbox do |v|
       v.customize ['modifyvm', :id, '--memory', '2048']
     end
+
+    sync_folder "development", dev
   end
-  
 end
