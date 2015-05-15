@@ -3,6 +3,11 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'charges/borrower_frontend',
+  :git  => 'git://github.com/LandRegistry/charges-borrower-frontend',
+  :ref  => 'puppet-module',
+  :path => 'puppet/borrower_frontend'
+
 mod 'LandRegistry/standard_env',
   :git => 'git://github.com/LandRegistry/standard-env',
   :ref => 'master'
