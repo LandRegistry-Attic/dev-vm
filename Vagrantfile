@@ -21,8 +21,8 @@ Vagrant.configure(2) do |config|
     puts "You may have to run `librarian-puppet` on your host machine if you have not already"
   end
 
-  config.vm.box = "landregistry/centos"
-  config.vm.box_version = "0.1.0"
+  config.vm.box = "puppetlabs/centos-7.0-64-puppet"
+  config.vm.box_version = "1.0.1"
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "site.pp"
