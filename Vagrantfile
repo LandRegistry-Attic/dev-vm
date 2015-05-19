@@ -21,6 +21,14 @@ Vagrant.configure(2) do |config|
     puts "You may have to run `librarian-puppet` on your host machine if you have not already"
   end
 
+  if not defined? VagrantDNS::Plugin
+    puts "recommended to install VagrantDNS"
+    puts "You can install it with `vagrant plugin install vagrant-dns`"
+  end
+
+  config.dns.tld = 'dev.service.gov.uk'
+  config.dns.patterns = [/^.*dev.service.gov.uk$/]
+
   config.vm.box = "puppetlabs/centos-7.0-64-puppet"
   config.vm.box_version = "1.0.1"
   config.vm.provision :puppet do |puppet|
@@ -44,7 +52,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "dev" do |dev|
-    dev.vm.host_name = "dev"
+    dev.vm.host_name = "vm.dev.service.gov.uk"
     dev.vm.network "private_network", ip: "10.10.10.10"
 
     dev.vm.provider :virtualbox do |v|
