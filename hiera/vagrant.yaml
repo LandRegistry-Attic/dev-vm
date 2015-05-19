@@ -5,4 +5,3 @@
 #
 # borrower_frontend::branch_or_revision: 'my-awesome-feature'
 
-borrower_frontend::branch_or_revision: 'puppet-module'
