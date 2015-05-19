@@ -92,3 +92,9 @@ node default {
 
 The Borrower Frontend will now be deployed in your VM and available on it's
 default port (8000) at `dev.service.gov.uk:8000`.
+
+## Using for your development
+
+This VM was mostly built for the Charges Team but we would like to support anyone else making use of it. When using it please keep project specific code out of the master branch. Take a new branch and make the changes: pull in your apps, install postgres, etc.
+
+If you make changes that seem good for anyone to use please commit these separately and cherry-pick them into a new feature branch. That way you can open a pull request and get it peer reviewed.
