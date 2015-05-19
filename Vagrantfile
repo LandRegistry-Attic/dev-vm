@@ -34,8 +34,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "site.pp"
-    #puppet.hiera_config_path = "hiera.vagrant.yaml"
-    #puppet.options = '--environment=development'
+    puppet.hiera_config_path = "hiera.yaml"
+    puppet.options = '--environment=development'
     puppet.module_path = ["modules"]
     puppet.facter = {
       'is_vagrant'   => true,

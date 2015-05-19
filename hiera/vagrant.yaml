@@ -1,0 +1,6 @@
+---
+
+# Use hiera to set environment specific facts
+# e.g. To switch the borrower_frontend to deploy a specific branch:
+#
+# borrower_frontend::branch_or_revision: 'my-awesome-feature'
