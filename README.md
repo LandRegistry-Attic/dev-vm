@@ -2,6 +2,32 @@
 
 This is a basic developer VM, built by the Charges Team for the Charges Team.
 
+## Pre-requisites
+
+We use a few plugins in the Dev VM you should install first:
+
+```
+> vagrant plugin install vagrant-dns
+> vagrant plugin install vagrant-librarian-puppet
+> vagrant plugin install vagrant-cachier
+```
+
+You also should have Vagrant and Virtualbox. Easiest way is through
+`homebrew-cask`:
+
+Install `homebrew-cask`:
+
+```
+> brew install caskroom/cask/brew-cask
+```
+
+Then install the Vagrant and Virtualbox:
+
+```
+> brew cask install vagrant
+> brew cask install virtualbox
+```
+
 ## Usage
 
 First clone the repo:
