@@ -3,6 +3,11 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'charges/api_skeleton',
+  :git  => 'git://github.com/LandRegistry/charges-api-skeleton',
+  :ref  => 'puppet',
+  :path => 'puppet/api_skeleton'
+
 mod 'charges/borrower_frontend',
   :git  => 'git://github.com/LandRegistry/charges-borrower-frontend',
   :path => 'puppet/borrower_frontend'

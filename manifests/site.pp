@@ -19,6 +19,7 @@ node default {
   require ::standard_env
 
   include ::borrower_frontend
+  class { 'api_skeleton': }
 
   service { 'firewalld':
     ensure => 'stopped',
