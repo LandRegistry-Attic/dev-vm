@@ -12,6 +12,12 @@ We use a few plugins in the Dev VM you should install first:
 > vagrant plugin install vagrant-cachier
 ```
 
+Then start the vagrant dns plugin:
+
+```
+> vagrant dns --install
+```
+
 You also should have Vagrant and Virtualbox. Easiest way is through
 `homebrew-cask`:
 
