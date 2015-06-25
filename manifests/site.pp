@@ -19,6 +19,11 @@ node default {
   require ::standard_env
   require ::standard_env::tools::cucumber
 
+  #include ::borrower_frontend
+  include ::case_api
+  #include ::deed_api
+
+
   service { 'firewalld':
     ensure => 'stopped',
   }
