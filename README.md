@@ -125,6 +125,19 @@ node default {
 The Borrower Frontend will now be deployed in your VM and available on it's
 default port (8000) at `dev.service.gov.uk:8000`.
 
+## Using postgres
+
+Just add
+```
+require_database: true
+```
+to the ```hiera/vagrant.yaml``` file for it to install an instance of postgres
+
+This will install postgres and create a database called charges for the vagrant user
+
+> Optional: If you want to define a none default database owner or password you can define
+```postgres::database_owner``` and/or ```postgres::database_password``` in hiera.
+
 ## Using for your development
 
 This VM was mostly built for the Charges Team but we would like to support anyone else making use of it. When using it please keep project specific code out of the master branch. Take a new branch and make the changes: pull in your apps, install postgres, etc.

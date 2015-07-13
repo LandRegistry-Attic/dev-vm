@@ -19,7 +19,25 @@ node default {
   require ::standard_env
   require ::standard_env::tools::cucumber
 
+  $require_database = hiera('require_database', false)
+  if $require_database {
+    require charges_postgres
+  }
+
   service { 'firewalld':
     ensure => 'stopped',
+  }
+}
+
+class charges_postgres (
+  $owner = hiera('postgres::database_owner', "vagrant"),
+  $password = hiera('postgres::database_password', "password")
+) {
+  require ::postgresql::server
+  require ::postgresql::lib::devel
+
+  postgresql::server::db { 'charges':
+    user     => $owner,
+    password => postgresql_password($owner, $password),
   }
 }

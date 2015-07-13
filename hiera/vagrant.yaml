@@ -4,3 +4,6 @@
 # e.g. To switch the borrower_frontend to deploy a specific branch:
 #
 # borrower_frontend::branch_or_revision: 'my-awesome-feature'
+
+# To have the vm spin up a postgres instance just uncomment the next line
+# require_database: true
