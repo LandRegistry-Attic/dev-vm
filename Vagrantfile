@@ -29,8 +29,8 @@ Vagrant.configure(2) do |config|
   config.dns.tld = 'dev.service.gov.uk'
   config.dns.patterns = [/^.*dev.service.gov.uk$/]
 
-  config.vm.box = "landregistry/charges-dev-env"
-  config.vm.box_version = "0.1.0"
+  config.vm.box = "landregistry/dev-env-nopost"
+  config.vm.box_version = "0.0.1"
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "site.pp"
