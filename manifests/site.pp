@@ -17,7 +17,7 @@ if versioncmp($::puppetversion,'3.6.1') >= 0 {
 
 node default {
   require ::standard_env
-  require ::standard_env::tools::cucumber
+  include ::standard_env::tools::cucumber
 
   include ::borrower_frontend
   include ::conveyancer_frontend
