@@ -25,6 +25,9 @@ node default {
   include ::case_api
   include ::deed_api
   include ::scribe
+  include ::verifudge
+
+  include ::govuk_flask_skeleton
 
   service { 'firewalld':
     ensure => 'stopped',

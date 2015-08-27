@@ -27,3 +27,13 @@ mod 'LandRegistry/scribe',
     git: 'git://github.com/LandRegistry/charges-scribe',
     ref: 'master',
     path: 'puppet/scribe'
+
+mod 'LandRegistry/verifudge',
+    git: 'git://github.com/LandRegistry/charges-verifudge',
+    ref: 'master',
+    path: 'puppet/verifudge'
+
+mod 'LandRegistry/govuk_flask_skeleton',
+    git: 'git://github.com/LandRegistry/govuk-flask-skeleton',
+    ref: 'master',
+    path: 'puppet/govuk_flask_skeleton'
