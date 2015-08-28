@@ -19,6 +19,7 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
     - [Development path](#development-path)
     - [Controlling apps](#controlling-apps)
         - [Starting / Stopping / Restarting an app](#starting--stopping--restarting-an-app)
+        - [Accessing an apps logs](#accessing-an-apps-logs)
         - [Replacing an app with your development version](#replacing-an-app-with-your-development-version)
     - [Accessing apps from your browser](#accessing-apps-from-your-browser)
     - [Pulling in another app](#pulling-in-another-app)
@@ -228,6 +229,26 @@ To restart the Case API use: `sudo systemctl restart -u case_api`
 *note:* you can also use the old initd syntax since initd passes through to systemd
 on centos, e.g. `sudo service borrower_frontend start`
 
+#### Accessing an apps logs
+
+Services run by SystemD output log to the same location, a utility called
+JournalD. All of our app deployed via Puppet will log to here as well. You can
+easily access the logs by using the `journalctl` command:
+
+```
+> sudo journalctl -u <app_name>
+```
+where <app_name> is the name of an app listed in the [Apps installed](#apps-installed)
+tables above. 
+
+To follow the logs as they are output, e.g. to see the behavior of an app during
+an acceptance test run you can use:
+
+```
+> sudo journalctl -f -u <app_name>
+```
+where `-f` is equivalent to tails `--follow`.
+
 #### Replacing an app with your development version
 
 A useful part of having all the apps installed and configured through nginx
@@ -242,7 +263,7 @@ the Dev VM. The Borrower Frontend that is on master will be installed and expose
 on http://borrower_frontend.dev.service.gov.uk and all other apps will be
 configured to connect to it, including the acceptance tests.
 
-Next I cd into `~/developement/borrower_frontend` where I have the Borrower
+Next I cd into `~/development/borrower_frontend` where I have the Borrower
 Frontend checked out. This is a different copy to the version running currently,
 which is located in `/opt/borrower_frontend`.
 
