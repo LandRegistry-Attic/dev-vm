@@ -24,6 +24,8 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
         - [Replacing an app with your development version](#replacing-an-app-with-your-development-version)
     - [Accessing apps from your browser](#accessing-apps-from-your-browser)
     - [Pulling in another app](#pulling-in-another-app)
+    - [Accessing the databases](#accessing-the-databases)
+    - [Dropping and Creating databases](#dropping-and-creating-databases)
 - [Using for your own development](#using-for-your-own-development)
 
 ## Philosophy
