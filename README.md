@@ -15,6 +15,7 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
     - [Case API](#case-api)
     - [Scribe](#scribe)
     - [Verifudge](#verifudge)
+    - [Catalogue](#catalogue)
 - [Development usage](#development-usage)
     - [Development path](#development-path)
     - [Controlling apps](#controlling-apps)
@@ -186,6 +187,17 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  Code on VM          | /opt/verifudge
  Default port        | 0.0.0.0:9080
 
+ ### Catalogue
+
+  Piece               | Location
+ ---------------------|------------------------------------------------------------------------------------
+  App name            | catalogue
+  Code                | [charges-catalogue](https://github.com/LandRegistry/charges-catalogue)
+  Infrastructure code | [charges-catalogue/puppet/catalogue](https://github.com/LandRegistry/charges-catalogue/tree/master/puppet/catalogue)
+  Development Host    | http://catalogue.dev.service.gov.uk
+  Code on VM          | /opt/catalogue
+  Default port        | 0.0.0.0:9100
+
 ##Development usage
 
 ### Development path
@@ -239,7 +251,7 @@ easily access the logs by using the `journalctl` command:
 > sudo journalctl -u <app_name>
 ```
 where <app_name> is the name of an app listed in the [Apps installed](#apps-installed)
-tables above. 
+tables above.
 
 To follow the logs as they are output, e.g. to see the behavior of an app during
 an acceptance test run you can use:

@@ -37,3 +37,8 @@ mod 'LandRegistry/govuk_flask_skeleton',
     git: 'git://github.com/LandRegistry/govuk-flask-skeleton',
     ref: 'master',
     path: 'puppet/govuk_flask_skeleton'
+
+mod 'LandRegistry/catalogue',
+    git: 'git://github.com/LandRegistry/charges-catalogue',
+    ref: 'master',
+    path: 'puppet/catalogue'
