@@ -187,7 +187,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  Code on VM          | /opt/verifudge
  Default port        | 0.0.0.0:9080
 
- ### Catalogue
+### Catalogue
 
   Piece               | Location
  ---------------------|------------------------------------------------------------------------------------
