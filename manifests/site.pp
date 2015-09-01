@@ -26,6 +26,7 @@ node default {
   include ::deed_api
   include ::scribe
   include ::verifudge
+  include ::catalogue
 
   include ::govuk_flask_skeleton
 
