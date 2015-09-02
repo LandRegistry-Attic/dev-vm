@@ -26,6 +26,15 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
     - [Pulling in another app](#pulling-in-another-app)
     - [Accessing the databases](#accessing-the-databases)
     - [Dropping and Creating databases](#dropping-and-creating-databases)
+    - [Deploying a specific version or branch](#deploying-a-specific-version-or-branch)
+        - [Deploying a different version of an apps Puppet module](#deploying-a-different-version-of-an-apps-puppet-module)
+        - [Deploy a different version of an app](#deploy-a-different-version-of-an-app)
+- [Anatomy of the VM](#anatomy-of-the-vm)
+    - [The Puppetfile](#the-puppetfile)
+    - [Hiera](#hiera)
+        - [The hiera.yaml file](#the-hierayaml-file)
+        - [The `/hiera` folder](#the-hiera-folder)
+        - [The `hiera/vagrant.yaml` file](#the-hieravagrantyaml-file)
 - [Using for your own development](#using-for-your-own-development)
 
 ## Philosophy
@@ -449,6 +458,198 @@ The connection string in this example would then be: `postgres:///my-awesome-db`
 
 Note: You can only create databases in Puppet. This is useful when adding a DB to
 an new app but not when something goes wrong and you need to wipe a DB.
+
+### Deploying a specific version or branch
+
+Often we need to deploy a new feature to the Dev VM to test it before we merge
+it.
+
+The Dev VM is set up to fetch the Puppet module that deploys an app based on the
+listings in [the Puppetfile](#the-puppetfile).
+This Puppet module then understands how to fetch and deploy the app.
+
+Each app is configured based on the defaults set in the module and the values
+set for it in [hiera](#hiera).
+
+Thus to change which version we deploy we need to make two changes, one to change
+the Puppet module we pull in and one to change the version of the app that the
+module fetches.
+
+#### Deploying a different version of an apps Puppet module
+
+When testing a change made to a Puppet module it's a importan to deploy it to
+the Dev VM first to see that it works. There are two ways to do this:
+
+**Deploy a local version**
+
+If currently working on a change you can tell Librarian Puppet to pull in the
+code as it is on disk on your machine. Simply change the declaration in the
+[Puppetfile](#the-puppetfile) to point to the location of the modified module
+on disk:
+
+```ruby
+mod 'LandRegistry/borrower_frontend',
+    path: '../borrower-frontend/puppet/borrower_frontend'
+```
+
+This will tell Librarian-Puppet to look in `../borrower-frontend/puppet/borrower_frontend`
+for the puppet module.
+
+**Deploy a branch**
+
+If you are wanting to deploy a change that has been pushed to github, for example
+to test out someones pull request before merging it, you can modify the
+[Puppetfile](#the-puppetfile) to point to the specific branch:
+
+```ruby
+mod 'LandRegistry/borrower_frontend',
+    git: 'git://github.com/LandRegistry/charges-borrower-frontend.git',
+    ref: 'my-awesome-feature',
+    path: 'puppet/borrower_frontend'
+```
+
+This will tell Librarian-Puppet to pull the module from the `my-awesome-feature`
+branch. It's important to remember that Librarian-Puppet needs to know the exact
+folder of the Puppet module, so we need to provide the path parameter. This will
+be used relative to the root of the git repo.
+
+### Deploy a different version of an app
+
+To deploy a specific version of an app, say to deploy someones branch so that you
+can test it works before merging, you need to configure the apps Puppet module
+using [Hiera](#hiera).
+
+In [the `hiera/vagrant.yaml` file](#the-hieravagrantyaml-file) you can override
+the default value of any class parameters. Each app provides a `branch_or_revision`
+parameter, which tells it which branch to checkout when deploying. By default
+this is set to `master`. For example the [branch_or_revision parameter of the
+Case Api](https://github.com/LandRegistry/charges-case-api/blob/master/puppet/case_api/manifests/init.pp#L6)
+
+**Examples:**
+
+```ruby
+::borrower_frontend::branch_or_revision: 'my-awesome-feature'
+```
+Deploy the version of the Borrower Frontend found on the `my-awesome-feature`
+branch.
+
+```ruby
+::case_api::branch_or_revision: '36989ac'
+```
+Deploy the version of the Case Api found at git commit [`36989ac`](https://github.com/LandRegistry/charges-case-api/commit/37294e036989ac25e491b31479e225939b0aaae6).
+
+To properly understand the different parameters you can change have a look at
+an apps `manifests/init.pp`, for example the [Borrower Frontends `init.pp`](https://github.com/LandRegistry/charges-borrower-frontend/blob/master/puppet/borrower_frontend/manifests/init.pp)
+
+## Anatomy of the VM
+
+### The Puppetfile
+
+Location: [`/Puppetfile`](https://github.com/LandRegistry/dev-vm/blob/master/Puppetfile)
+
+The Puppetfile tells Librarian-Puppet which modules to pull in. An example
+declaration is:
+
+```ruby
+mod 'LandRegistry/borrower_frontend',
+    git: 'git://github.com/LandRegistry/charges-borrower-frontend',
+    ref: 'master',
+    path: 'puppet/borrower_frontend'
+```
+
+**Line by line explanation:**
+
+```ruby
+mod 'LandRegistry/borrower_frontend',
+```
+
+Declare the modules name. This needs to be the same as the enclosing folder that
+the puppet code exists in, e.g. if my puppet module is in `/foo` then I need to
+name the module `mod MyCompany/foo`.
+
+```ruby
+    git: 'git://github.com/LandRegistry/charges-borrower-frontend',
+```
+
+Tell Librarian-Puppet where to find the repo that contains the module. This is
+only needed when you haven't published your modules to a [forge](https://forge.puppetlabs.com/).
+
+```ruby
+    ref: 'master',
+```
+
+Tell Librarian-Puppet which branch or commit to fetch the puppet code from. You
+can change this to any commit sha or branch name that is pushed to the git url
+above. This is useful when testing puppet changes. **Note:** This only changes
+where you fetch the *puppet* code from, not the app code. You configure the
+module in [hiera](#hiera) for that.
+
+```ruby
+    path: 'puppet/borrower_frontend'
+```
+
+Tell Librarian-Puppet where to find the module inside the git repo above. You
+can omit the git repo declaration and use only a path parameter to reference a
+location on disk.
+
+The Puppetfile can be used to [deploy a different version of an apps Puppet module](#deploying-a-different-version-of-an-apps-puppet-module).
+
+### Hiera
+
+Hiera is a tool for storing configuration parameters and it's fully integrated
+in to Puppet. When creating a resource Puppet will look for a config value in
+hiera and use that, falling back to any defaults defined in the class if it can't
+find one.
+
+Using Hiera we can set config values that are specific to certain environments,
+even to certain VMs, in this way the same Puppet code can be used to deploy the
+app to multiple locations.
+
+Hiera is often used in the Dev VM to [deploy a different version of an app](#deploy-a-different-version-of-an-app)
+
+#### The hiera.yaml file
+
+The hiera.yaml file configues hiera and tells it where to look for files that
+contain the config values. It's likely you'll not need to change this much. Ours
+is set up to point to the vagrant.yaml file in [`hiera/vagrant.yaml`](https://github.com/LandRegistry/dev-vm/blob/master/hiera/vagrant.yaml).
+
+#### The `/hiera` folder
+
+The `/hiera` folder stores yaml files that contain config values used by Puppet
+to configure the different Puppet modules. Files in this folder can be selected
+based on any property of the VM, but often it is the "Fully Qualified Domain Name"
+that's used (or `fqdn`). In the Dev VM we have only one VM and so we have only
+one data file, [`hiera/vagrant.yaml`](https://github.com/LandRegistry/dev-vm/blob/master/hiera/vagrant.yaml)
+which is used to configure our Dev VM.
+
+#### The `hiera/vagrant.yaml` file
+
+Example file: [`hiera/vagrant.yaml`](https://github.com/LandRegistry/dev-vm/blob/master/hiera/vagrant.yaml).
+
+This file is filled with `key: value` pairs, where the key indicates which class
+parameter to override and the value is used as the new value.
+
+The key is namespaced to indicate which class and which parameter of that class
+to override. Say we had a class named `foo` and it had a parameter `bar`:
+
+```ruby
+class foo ($bar = 'bar') {
+}
+```
+
+If I want to override that bar parameter I need to use the key: `::foo::bar` to
+indicate that all instances of `foo` should set `bar` to the new value.
+
+**Examples:**
+
+```
+::borrower_frontend::port: 9001
+```
+Set the Borrower Frontends port to `9001`.
+```
+::case_api::branch_or_revision: 'my-awesome-new-feature'
+```
+Tell the Case API to [deploy the code on `my-awesome-new-feature` branch](#deploy-a-different-version-of-an-app).
 
 ## Using for your own development
 
