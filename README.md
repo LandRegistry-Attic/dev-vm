@@ -29,7 +29,7 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
     - [Deploying a specific version or branch](#deploying-a-specific-version-or-branch)
         - [Deploying a different version of an apps Puppet module](#deploying-a-different-version-of-an-apps-puppet-module)
         - [Deploy a different version of an app](#deploy-a-different-version-of-an-app)
-- [Anatomy of the VM](#anatomy-of-the-vm)
+- [Anatomy of this repo](#anatomy-of-this-repo)
     - [The Puppetfile](#the-puppetfile)
     - [Hiera](#hiera)
         - [The hiera.yaml file](#the-hierayaml-file)
@@ -541,7 +541,7 @@ Deploy the version of the Case Api found at git commit [`36989ac`](https://githu
 To properly understand the different parameters you can change have a look at
 an apps `manifests/init.pp`, for example the [Borrower Frontends `init.pp`](https://github.com/LandRegistry/charges-borrower-frontend/blob/master/puppet/borrower_frontend/manifests/init.pp)
 
-## Anatomy of the VM
+## Anatomy of this repo
 
 ### The Puppetfile
 
