@@ -144,7 +144,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | borrower_frontend
  Code                | [charges-borrower-frontend](https://github.com/LandRegistry/charges-borrower-frontend)
  Infrastructure code | [charges-borrower-frontend/puppet/borrower_frontend](https://github.com/LandRegistry/charges-borrower-frontend/tree/master/puppet/borrower_frontend)
- Development Host    | http://borrower_frontend.dev.service.gov.uk
+ Development Host    | http://borrower-frontend.dev.service.gov.uk
  Code on VM          | /opt/borrower_frontend
  Default port        | 0.0.0.0:9000
 
@@ -155,7 +155,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | conveyancer_frontend
  Code                | [charges-conveyancer-frontend](https://github.com/LandRegistry/charges-conveyancer-frontend)
  Infrastructure code | [charges-conveyancer-frontend/puppet/borrower_frontend](https://github.com/LandRegistry/charges-conveyancer-frontend/tree/master/puppet/conveyancer_frontend)
- Development Host    | http://conveyancer_frontend.dev.service.gov.uk
+ Development Host    | http://conveyancer-frontend.dev.service.gov.uk
  Code on VM          | /opt/conveyancer_frontend
  Default port        | 0.0.0.0:9040
 
@@ -166,7 +166,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | deed_api
  Code                | [charges-deed-api](https://github.com/LandRegistry/charges-deed-api)
  Infrastructure code | [charges-deed-api/puppet/deed_api](https://github.com/LandRegistry/charges-deed-api/tree/master/puppet/deed_api)
- Development Host    | http://deed_api.dev.service.gov.uk
+ Development Host    | http://deed-api.dev.service.gov.uk
  Code on VM          | /opt/deed_api
  Default port        | 0.0.0.0:9012
 
@@ -177,7 +177,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | case_api
  Code                | [charges-case-api](https://github.com/LandRegistry/charges-case-api)
  Infrastructure code | [charges-case-api/puppet/case_api](https://github.com/LandRegistry/charges-case-api/tree/master/puppet/case_api)
- Development Host    | http://case_api.dev.service.gov.uk
+ Development Host    | http://case-api.dev.service.gov.uk
  Code on VM          | /opt/case_api
  Default port        | 0.0.0.0:9070
 
@@ -213,6 +213,17 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
   Development Host    | http://catalogue.dev.service.gov.uk
   Code on VM          | /opt/catalogue
   Default port        | 0.0.0.0:9100
+
+### Matching Service
+
+  Piece               | Location
+ ---------------------|------------------------------------------------------------------------------------
+  App name            | catalogue
+  Code                | [charges-matching-service](https://github.com/LandRegistry/charges-matching-service)
+  Infrastructure code | [charges-matching-service/puppet/matching_service](https://github.com/LandRegistry/charges-matching-service/tree/master/puppet/matching_service)
+  Development Host    | http://matching-service.dev.service.gov.uk
+  Code on VM          | /opt/matching_service
+  Default port        | 0.0.0.0:9090
 
 ##Development usage
 
