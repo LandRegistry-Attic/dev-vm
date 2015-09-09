@@ -42,3 +42,8 @@ mod 'LandRegistry/catalogue',
     git: 'git://github.com/LandRegistry/charges-catalogue',
     ref: 'master',
     path: 'puppet/catalogue'
+
+mod 'LandRegistry/matching_service',
+    git: 'git://github.com/LandRegistry/charges-matching-service',
+    ref: 'master',
+    path: 'puppet/matching_service'

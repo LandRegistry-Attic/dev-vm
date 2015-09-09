@@ -27,6 +27,7 @@ node default {
   include ::scribe
   include ::verifudge
   include ::catalogue
+  include ::matching_service
 
   include ::govuk_flask_skeleton
 
