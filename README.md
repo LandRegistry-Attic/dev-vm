@@ -66,22 +66,7 @@ infrastructure code.
 
 ## Pre-requisites
 
-We use a few plugins in the Dev VM you should install first:
-
-```
-> vagrant plugin install vagrant-dns
-> vagrant plugin install vagrant-librarian-puppet
-> vagrant plugin install vagrant-cachier
-```
-
-Then start the vagrant dns plugin:
-
-```
-> vagrant dns --install
-```
-
-You also should have Vagrant and Virtualbox. Easiest way is through
-`homebrew-cask`:
+You should have Vagrant and Virtualbox. Easiest way is through `homebrew-cask`:
 
 Install `homebrew-cask`:
 
@@ -94,6 +79,26 @@ Then install the Vagrant and Virtualbox:
 ```
 > brew cask install vagrant
 > brew cask install virtualbox
+```
+
+You'll also need a few ruby gems installed:
+
+```
+> gem install puppet
+> gem install librarian-puppet
+```
+
+We use a few plugins in the Dev VM you should install first:
+
+```
+> vagrant plugin install vagrant-dns
+> vagrant plugin install vagrant-cachier
+```
+
+Then start the vagrant dns plugin:
+
+```
+> vagrant dns --install
 ```
 
 ## Usage
