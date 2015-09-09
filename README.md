@@ -166,7 +166,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | deed_api
  Code                | [charges-deed-api](https://github.com/LandRegistry/charges-deed-api)
  Infrastructure code | [charges-deed-api/puppet/deed_api](https://github.com/LandRegistry/charges-deed-api/tree/master/puppet/deed_api)
- Development Host    | http://deed-api.dev.service.gov.uk
+ Development Host    | http://deedapi.dev.service.gov.uk
  Code on VM          | /opt/deed_api
  Default port        | 0.0.0.0:9012
 
@@ -188,7 +188,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
  App name            | scribe
  Code                | [charges-scribe](https://github.com/LandRegistry/charges-scribe)
  Infrastructure code | [charges-scribe/puppet/scribe](https://github.com/LandRegistry/charges-scribe/tree/master/puppet/scribe)
- Development Host    | http://scribe.dev.service.gov.uk
+ Development Host    | http://scribeapi.dev.service.gov.uk
  Code on VM          | /opt/scribe
  Default port        | 0.0.0.0:9010
 
