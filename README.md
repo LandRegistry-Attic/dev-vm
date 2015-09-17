@@ -6,6 +6,7 @@ This is a full featured Developer VM, built by the Charges Team for the Charges 
 - [Philosophy](#philosophy)
   - [In theory](#in-theory)
   - [In practice](#in-practice)
+- [README conventions](#readme-conventions)
 - [Pre-requisites](#pre-requisites)
 - [Usage](#usage)
 - [Apps installed](#apps-installed)
@@ -63,6 +64,39 @@ infrastructure code.
     - example: [charges-borrower-frontend/puppet/borrower_frontend](https://github.com/LandRegistry/charges-borrower-frontend/tree/master/puppet/borrower_frontend)
 - Infrastructure code for each app is pulled in to the Dev VM through Librarian-Puppet
     - example: [the Dev VM Puppetfile](https://github.com/LandRegistry/dev-vm/blob/master/Puppetfile)
+
+## README conventions
+
+This readme uses a few conventions to make understanding where to execute
+commands.
+
+To indicate a command that should be *executed in your shell*, probably in the
+root of this repo:
+
+```bash
+> [some command]
+```
+
+To indicate a command that should be *run inside the dev vm*, i.e. by executing
+`> vagrant ssh` to access the vm first:
+
+```bash
+vagrant@dev-vm > [some command]
+```
+
+To indicate a command that should be *run as a specific user* in the dev vm:
+
+```bash
+[user]@dev-vm > [some command]
+```
+
+For example if you should run a command as the `postgres` user you should:
+
+```bash
+> vagrant ssh
+vagrant@dev-vm > sudo su - postgres
+postgres@dev-vm > [some command]
+```
 
 ## Pre-requisites
 
@@ -231,7 +265,7 @@ reading logs, you can through [systemd and journalctl](#controlling-apps).
 
 The VM uses rsync to mirror the path you set when installing:
 ```bash
-export development=/path/to/your/code
+> export development=/path/to/your/code
 ```
 
 This folder will exist in `~/development`. In this way you can keep using your
@@ -251,7 +285,7 @@ copy of this repo.
 To start / stop / restart any app use:
 
 ```
-> sudo systemctl <action> -u <app_name>
+vagrant@dev-vm > sudo systemctl <action> -u <app_name>
 ```
 
 Where <app_name> is the name listed in the [Apps installed](#apps-installed)
@@ -275,7 +309,7 @@ JournalD. All of our app deployed via Puppet will log to here as well. You can
 easily access the logs by using the `journalctl` command:
 
 ```
-> sudo journalctl -u <app_name>
+vagrant@dev-vm > sudo journalctl -u <app_name>
 ```
 where <app_name> is the name of an app listed in the [Apps installed](#apps-installed)
 tables above.
@@ -284,7 +318,7 @@ To follow the logs as they are output, e.g. to see the behavior of an app during
 an acceptance test run you can use:
 
 ```
-> sudo journalctl -f -u <app_name>
+vagrant@dev-vm > sudo journalctl -f -u <app_name>
 ```
 where `-f` is equivalent to tails `--follow`.
 
@@ -309,38 +343,38 @@ which is located in `/opt/borrower_frontend`.
 I make my changes and ensure my unit tests are passing:
 
 ```
-> cd ~/development/borrower_frontend
-> mkvirtualenv borrower_frontend
-> pip install -r requirements.txt
-> pip install -r requirements_test.txt
->
-> #Do some work
-> python tests.py
+vagrant@dev-vm > cd ~/development/borrower_frontend
+vagrant@dev-vm > mkvirtualenv borrower_frontend
+vagrant@dev-vm > pip install -r requirements.txt
+vagrant@dev-vm > pip install -r requirements_test.txt
+vagrant@dev-vm >
+vagrant@dev-vm > #Do some work
+vagrant@dev-vm > python tests.py
 ...........................
 ok
->
+vagrant@dev-vm >
 ```
 
 Now I stop the Borrower Frontend that puppet installed:
 ```
-> sudo service borrower_frontend stop
+vagrant@dev-vm > sudo service borrower_frontend stop
 ```
 
 Since the Borrower Frontend has an nginx config that expects it to be running on
 port `9000`, I can now start my version bound to the same port:
 
 ```
-> cd ~/development/borrower_frontend
-> workon borrower_frontend
-> python run.py runserver --host 0.0.0.0 --port 9000
+vagrant@dev-vm > cd ~/development/borrower_frontend
+vagrant@dev-vm > workon borrower_frontend
+vagrant@dev-vm > python run.py runserver --host 0.0.0.0 --port 9000
 ```
 
 Now my changes are available on http://borrower_frontend.dev.service.gov.uk and
 I can run the full acceptance tests easily:
 
 ```
-> cd ~/development/borrower_frontend/acceptance_tests
-> ./run_tests.sh
+vagrant@dev-vm > cd ~/development/borrower_frontend/acceptance_tests
+vagrant@dev-vm > ./run_tests.sh
 ```
 
 ### Accessing apps from your browser
