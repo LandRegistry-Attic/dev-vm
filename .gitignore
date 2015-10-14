@@ -2,4 +2,5 @@
 .librarian
 .tmp
 *.lock
+.DS_Store
 /modules
